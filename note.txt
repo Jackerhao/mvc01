@@ -1,0 +1,54 @@
+1.java里的"@WebServlet(name="CustomerServlet", urlPatterns="*.do")"
+代表web.xml文件上的
+<servlet-mapping>
+<servlet-name>CustomerServlet</servlet-name>
+<url-pattern>*.do</url-pattern>
+</servlet-mapping>
+
+
+view:jsp
+1.呈现数据:从request中获取Servlet放入的属性.
+2.接收用户的输入
+3.编写JS代码给出对应的提示
+
+Controller: Servlet
+1.获取请求信息:获取请求参数
+2.验证请求参数的合法性:验证失败.需要返回页面,并给出提示信息.
+3.把请求参数封装为一个JavaBean.
+4.调用DAO的方法  获取返回的结果.
+5.把返回的结果放入到request中
+6.响应页面  转发,重定向.
+
+Model:DAO
+1.获取数据库连接
+2.执行CRUD操作
+3.返回结果
+
+注意:1.不能跨层访问
+    2.只能自上向下依赖,而不能自下向上依赖.
+    
+多个请求使用同一个Servlet
+添加:customerServlet?method=add
+查询:customerServlet?method=query
+删除:customerServlet?method=delete
+
+1.获取method请求参数的值
+2.根据method的值调用对应的方法
+
+缺点:当添加一个请求时,需要在Servlet中修改两处代码:switch、添加方法
+    url中使用method=xxx暴漏了要调用的方法,不私密,有安全隐患.
+
+
+
+深入理解面向接口编程:在类中调用接口的方法,而不必关心具体的是实现.这将有利于代码的解耦.使程序有
+更好的可移植性和可扩展性.
+
+@WebServlet注解配置Servlet
+@WebServlet(name = "myUserServlet",
+ 	urlPatterns = "/user/test", 	
+ 	loadOnStartup = 1,  	initParams =
+ 	 {@WebInitParam(name="name", value="小明"), 			
+ 	  @WebInitParam(name="pwd", value="123456")	}
+)
+
+
